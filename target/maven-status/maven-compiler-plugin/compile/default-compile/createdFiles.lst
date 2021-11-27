@@ -1,5 +1,4 @@
 ModelosApi\TagUsuario.class
-Servlets\ControladorGuardarPerfil.class
 ConsultasALaDb\ConstructorDeObjeto.class
 ModelosApi\ModeloResponseLogin.class
 Servlets\ControladorRetornarTags.class
@@ -15,15 +14,15 @@ Convetidores\ConvertidorUsuario.class
 ModelosApi\Perfil.class
 Convetidores\ConvertidorPerfil.class
 Servlets\ControladorLogin.class
-Servlets\ControladorAgregarTagAUsuario.class
 ConsultasALaDb\Consulta.class
 Convetidores\ConvertidorTagUsuario.class
 Convetidores\ConvertidorResponseModeloLogin.class
-Servlets\ControladorEliminarTagUsuario.class
+Servlets\ControladorPublicacionRevista.class
 ModelosApi\Usuario.class
 Convetidores\Convertidor.class
 ExtractorDeStringDelRequest\ExtractorDeStringRequest.class
+Servlets\ControladorPerfil.class
 Convetidores\ConvertidorString.class
-Servlets\ControladorRetornarPerfil.class
 Servlets\ControladorTagsDelUsuario.class
 ExtractorDeStringDelRequest\ExtractroDeString.class
+ModelosApi\Categoria.class

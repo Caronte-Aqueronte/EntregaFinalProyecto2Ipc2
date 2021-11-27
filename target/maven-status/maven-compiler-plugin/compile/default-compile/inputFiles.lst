@@ -16,14 +16,13 @@ F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorCrearUsua
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\Consulta.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorTagsDelUsuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\Convertidor.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorPublicacionRevista.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaUsuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\Tag.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorPerfil.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\Usuario.java
-F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorRetornarPerfil.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\TagUsuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaTag.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\Categoria.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\ModeloResponseLogin.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorUsuario.java
-F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorAgregarTagAUsuario.java
-F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorEliminarTagUsuario.java
-F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorGuardarPerfil.java

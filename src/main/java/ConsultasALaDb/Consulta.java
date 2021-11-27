@@ -6,9 +6,9 @@
 package ConsultasALaDb;
 
 import ConexionAMySql.ConexionSql;
-import ModelosApi.Perfil;
-import ModelosApi.TagUsuario;
+import ModelosApi.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 public abstract class Consulta extends ConexionSql {
 
@@ -24,9 +24,9 @@ public abstract class Consulta extends ConexionSql {
     }
 
     /**
-     * Este metodo se comunica con la base de datos y busca el nombre del usuario
-     * que recibe como parametro dentro de la tabla usuario, si existe deulve true
-     * de lo contrario devuelve false.
+     * Este metodo se comunica con la base de datos y busca el nombre del
+     * usuario que recibe como parametro dentro de la tabla usuario, si existe
+     * deulve true de lo contrario devuelve false.
      *
      * @param nombreUsuario
      * @return
@@ -111,6 +111,25 @@ public abstract class Consulta extends ConexionSql {
             return false;
         } catch (SQLException ex) {
             return false;
+        }
+    }
+
+    /**
+     * Este metodo consulta a la base de datos pidiendo todas las tuplas de la
+     * tabla categoria, consigue un array de Categoria y lo devuelve.
+     *
+     * @return
+     */
+    public ArrayList<Categoria> devolverCategorias() {
+        try {
+            Statement query = CONEXION.createStatement();//creamos el statement que llevara la query sql
+            ResultSet resultado = query.executeQuery(
+                    "SELECT * FROM categoria;");//esta query devolvera todo el contenido de la tabla categoria en la bd
+            //mandamos a crear el array de categorias a partir del ResultSet con la query ejecutada
+            ArrayList<Categoria> categorias = constructorObjeto.crearArrayDeCategorias(resultado);
+            return categorias;//devolver el arraylist
+        } catch (SQLException ex) {
+            return new ArrayList<Categoria>();//si hay error devolvemos un vacio
         }
     }
 
