@@ -1,8 +1,13 @@
 package ConsultasALaDb;
 
 import ModelosApi.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 public class ConstructorDeObjeto {
 
@@ -92,5 +97,25 @@ public class ConstructorDeObjeto {
         } catch (SQLException ex) {
             return categorias;//si hay error entonces devolvemos el array independiente de su estado
         }
+    }
+
+    public Revista crearRevistaDeUnRequest(HttpServletRequest request) throws IOException, ServletException {
+        //construimos un objeto revista a partir del formData que vendra en la request
+        String nombreRevista = request.getParameter("nombreRevista");
+        String descripcion = request.getParameter("descripcion");
+        String categoria = request.getParameter("categoria");
+        Part parteArchivo = request.getPart("datafilePdf");//obtener las partes del archivo
+        InputStream contenido = parteArchivo.getInputStream();//obtener el inputstream de las partes de; archivo
+        Part parteArchivoMiniatura = request.getPart("datafileMiniatura");//obtener las partes del archivo de la miniatura
+        InputStream miniatura = parteArchivoMiniatura.getInputStream();//obtener la miniatura a partir de las partres del mismo
+        double costoDeSuscripcion = Double.valueOf(request.getParameter("costoDeSuscripcion"));
+        String estadoSuscripcion = request.getParameter("estadoSuscripcion");
+        String estadoComentarios = request.getParameter("estadoComentarios");
+        String estadoLikes = request.getParameter("estadoLikes");
+        String fechaDePublicacion = request.getParameter("fechaDePublicacion");
+        String usuarioCreador = request.getParameter("usuarioCreador");
+        Revista revista = new Revista(nombreRevista, descripcion, categoria, contenido, miniatura, costoDeSuscripcion, //creamos el objeto
+                estadoSuscripcion, estadoComentarios, estadoLikes, fechaDePublicacion, usuarioCreador);//
+        return revista;
     }
 }

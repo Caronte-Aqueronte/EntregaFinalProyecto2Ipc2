@@ -29,12 +29,6 @@ import javax.servlet.http.*;
 @WebServlet(name = "ControladorTagsDelUsuario", urlPatterns = {"/ControladorTagsDelUsuario"})
 public class ControladorTagsDelUsuario extends HttpServlet {
 
-    private ConsultaTag consulta;
-    private Convertidor convertidor;
-    private ExtractorDeStringRequest extractor;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-
     /**
      * Regula todas las peticiones post que llegan desde el frontend
      *
@@ -46,25 +40,20 @@ public class ControladorTagsDelUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //inicializarmos la request y el response
-        this.request = request;
-        this.response = response;
-        //inicializar la consulta
-        consulta = new ConsultaTag(new ConstructorDeObjeto());
         //inicializar el extractor
-        extractor = new ExtractorDeStringRequest(request);
+        ExtractorDeStringRequest extractor = new ExtractorDeStringRequest(request);
         //por ultimo extraemos el json que trae el request
         String jsonRequest = extractor.extraerStringDeRequest();
         //verificamos el header "Accion" para saber que desea hacer el usuario
         switch (request.getHeader("Accion")) {
             case "retornarTagsDelUsuario":
-                controlarRetornoDeTagsDelUsuario(jsonRequest);
+                controlarRetornoDeTagsDelUsuario(jsonRequest, response);
                 break;
             case "agregarNuevoTag":
-                controlarAgregacionDeNuevoTagParaUsuario(jsonRequest);
+                controlarAgregacionDeNuevoTagParaUsuario(jsonRequest, response);
                 break;
             case "eliminarTag":
-                controlarEliminacionDeTagDelPerfilDelUsuario(jsonRequest);
+                controlarEliminacionDeTagDelPerfilDelUsuario(jsonRequest, response);
                 break;
         }
     }
@@ -76,11 +65,12 @@ public class ControladorTagsDelUsuario extends HttpServlet {
      * @param jsonRequest
      * @throws IOException
      */
-    private void controlarRetornoDeTagsDelUsuario(String jsonRequest) throws IOException {
+    private void controlarRetornoDeTagsDelUsuario(String jsonRequest, HttpServletResponse response) throws IOException {
+        ConsultaTag consulta = new ConsultaTag(new ConstructorDeObjeto());
         //inicializar el gson
         Gson gson = new Gson();
         //inicializar el convertidor
-        convertidor = new ConvertidorString(String.class);
+        ConvertidorString convertidor = new ConvertidorString(String.class);
         //pasamos el json a string para obtener el nombre del usuario
         String nombreUsuario = String.valueOf(convertidor.deJsonAClase(jsonRequest));
         //mandamos a traer todos los tags existentes para el usuario de la base de datos
@@ -99,9 +89,10 @@ public class ControladorTagsDelUsuario extends HttpServlet {
      * @param jsonRequest
      * @throws IOException
      */
-    private void controlarAgregacionDeNuevoTagParaUsuario(String jsonRequest) throws IOException {
+    private void controlarAgregacionDeNuevoTagParaUsuario(String jsonRequest, HttpServletResponse response) throws IOException {
+        ConsultaTag consulta = new ConsultaTag(new ConstructorDeObjeto());
         //inicializar el convertidor como un ConvertidorTagUsuario para obtener el tag a agregar en formato json
-        convertidor = new ConvertidorTagUsuario(TagUsuario.class);
+        Convertidor convertidor = new ConvertidorTagUsuario(TagUsuario.class);
         //convertir el string en objeto
         TagUsuario tagAgregar = (TagUsuario) convertidor.deJsonAClase(jsonRequest);
         //mandar a eliminar el tag
@@ -121,9 +112,10 @@ public class ControladorTagsDelUsuario extends HttpServlet {
      *
      * @param jsonRequest
      */
-    private void controlarEliminacionDeTagDelPerfilDelUsuario(String jsonRequest) {
-        //inicializar el convertidor como un ConvertidorTagUsuario para obtener el tag a eliminar en formato json
-        convertidor = new ConvertidorTagUsuario(TagUsuario.class);
+    private void controlarEliminacionDeTagDelPerfilDelUsuario(String jsonRequest, HttpServletResponse response) {
+        ConsultaTag consulta = new ConsultaTag(new ConstructorDeObjeto());
+//inicializar el convertidor como un ConvertidorTagUsuario para obtener el tag a eliminar en formato json
+        Convertidor convertidor = new ConvertidorTagUsuario(TagUsuario.class);
         //convertir el string en objeto
         TagUsuario tagAEliminar = (TagUsuario) convertidor.deJsonAClase(jsonRequest);
         //mandar a eliminar el tag

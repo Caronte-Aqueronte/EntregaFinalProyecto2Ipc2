@@ -13,6 +13,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.servlet.ServletException;
+import javax.servlet.SingleThreadModel;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,10 +27,8 @@ import javax.servlet.http.Part;
  */
 @WebServlet(name = "ControladorSubirFoto", urlPatterns = {"/ControladorSubirFoto"})
 @MultipartConfig(location = "tmp")
-public class ControladorSubirFoto extends HttpServlet {
+public class ControladorSubirFoto extends HttpServlet implements SingleThreadModel{
 
-    private ConsultaUsuario consulta;
-    private Convertidor convertidorString;
 
     /**
      * Metodo que retorna la imagen de perfil de un usuario que espeficique la
@@ -43,7 +42,7 @@ public class ControladorSubirFoto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        consulta = new ConsultaUsuario(new ConstructorDeObjeto());//inicializamos las consultas
+        ConsultaUsuario consulta = new ConsultaUsuario(new ConstructorDeObjeto());//inicializamos las consultas
         String nombreUsuario = request.getParameter("nombreUsuario");//obtenemos el nombre del usuario por medio del la reuqest
         BufferedInputStream fileStream = new BufferedInputStream(consulta.traerFoto(nombreUsuario));//mandamos a traer la foto del usuario
         response.setContentType("image/png");//especificamos que es una ong
@@ -65,8 +64,8 @@ public class ControladorSubirFoto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        convertidorString = new ConvertidorString(String.class);//inicializamos el convertidor
-        consulta = new ConsultaUsuario(new ConstructorDeObjeto());//inicializar consulta
+        Convertidor convertidorString = new ConvertidorString(String.class);//inicializamos el convertidor
+        ConsultaUsuario consulta = new ConsultaUsuario(new ConstructorDeObjeto());//inicializar consulta
         String nombreUsuario = request.getParameter("nombreUsuario");//obtener el nombre del usuario del request
         Part parteArchivo = request.getPart("datafile");//obtener las partes del archivo
         InputStream stream = parteArchivo.getInputStream();//obtener el inputstream

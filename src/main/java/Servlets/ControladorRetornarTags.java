@@ -23,16 +23,15 @@ import javax.servlet.http.*;
 @WebServlet(name = "ControladorRetornarTags", urlPatterns = {"/ControladorRetornarTags"})
 public class ControladorRetornarTags extends HttpServlet {
 
-    private ConsultaTag consulta;
-    private Gson gson;
+
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //inicializar la consulta
-        consulta = new ConsultaTag(new ConstructorDeObjeto());
+        ConsultaTag consulta = new ConsultaTag(new ConstructorDeObjeto());
         //inicializar el convertidor
-        gson = new Gson();
+        Gson gson = new Gson();
         //mandamos a traer todos los tags existentes de la base de datos
         ArrayList<Tag> tags = consulta.traerTodosLosTags();
         //construir un json del arrayList

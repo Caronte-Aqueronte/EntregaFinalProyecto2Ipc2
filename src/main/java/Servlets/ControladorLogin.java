@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ControladorLogin", urlPatterns = {"/ControladorLogin"})
 public class ControladorLogin extends HttpServlet {
 
-    private ConsultaLogin consultasLogin = new ConsultaLogin(new ConstructorDeObjeto());
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -38,11 +36,12 @@ public class ControladorLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ConsultaLogin consultasLogin = new ConsultaLogin(new ConstructorDeObjeto());
         ExtractorDeStringRequest extractor = new ExtractorDeStringRequest(request);//creamos un extractor para obtener el string json
-        
+
         Convertidor convertidorUsuario = new ConvertidorUsuario(Usuario.class);//creamos un convertidor del tipo convertidor usuario
         Convertidor convertidorResponse = new ConvertidorResponseModeloLogin(ModeloResponseLogin.class);
-        
+
         String jsonDelRequest = extractor.extraerStringDeRequest();//traemos el string que tiene el request
         Usuario usuarioParaLogin = (Usuario) convertidorUsuario.deJsonAClase(jsonDelRequest);//convertimos la cadena de entrada a objeto
         ModeloResponseLogin modeloRespuesta = consultasLogin.hacerLogin(usuarioParaLogin);

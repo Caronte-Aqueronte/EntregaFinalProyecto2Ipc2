@@ -16,9 +16,12 @@ PRIMARY KEY (`nombre_de_categoria`));
 
 CREATE TABLE `revista` (
 `nombre_de_revista` VARCHAR(100) NOT NULL,
+`descripcion` LONGTEXT NOT NULL,
 `nombre_de_usuario_creador` VARCHAR(100) NOT NULL,
 `categoria` VARCHAR(100) NOT NULL,
 `contenido` LONGBLOB NOT NULL,
+`miniatura` LONGBLOB NOT NULL,
+`costo_de_suscripcion` DOUBLE(10,2) NOT NULL,
 `fecha_de_publicacion` DATETIME NOT NULL,
 `estado_de_suscripciones` VARCHAR(45) NOT NULL,
 `estado_de_comentarios` VARCHAR(45) NOT NULL,
@@ -37,6 +40,7 @@ CREATE TABLE `edicion` (
 `numero_de_edicion` INT NOT NULL,
 `nombre_de_revista` VARCHAR(100) NOT NULL,
 `nombre_de_usuario_creador` VARCHAR(100) NOT NULL,
+`contenido` LONGBLOB NOT NULL,
 PRIMARY KEY (`numero_de_edicion`, `nombre_de_revista`, `nombre_de_usuario_creador`),
 FOREIGN KEY (`nombre_de_revista` , `nombre_de_usuario_creador`)
 REFERENCES `revista` (`nombre_de_revista` , `nombre_de_usuario_creador`)

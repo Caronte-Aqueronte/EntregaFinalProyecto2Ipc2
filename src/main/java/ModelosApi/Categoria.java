@@ -13,7 +13,7 @@ package ModelosApi;
 public class Categoria {
 
     //Atributos que representan a una categoria
-    String nombreCategoria;
+    private String nombreCategoria;
 
     /**
      * Constructor de la clase Categoria que inicializa los atributos de la

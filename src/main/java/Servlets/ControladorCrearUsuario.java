@@ -24,10 +24,7 @@ import javax.servlet.http.*;
 @WebServlet(name = "CrearUsuario", urlPatterns = {"/ControladorCrearUsuario"})
 public class ControladorCrearUsuario extends HttpServlet {
 
-    private ConsultaUsuario consulta;
-    private ExtractorDeStringRequest extractor;
-    private Convertidor convertidorUsuario;
-    private Convertidor convertidorString;
+
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -41,10 +38,10 @@ public class ControladorCrearUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //inicializar los objetos que nos serviran;
-        consulta = new ConsultaUsuario(new ConstructorDeObjeto());
-        extractor = new ExtractorDeStringRequest(request);
-        convertidorUsuario = new ConvertidorUsuario(Usuario.class);
-        convertidorString = new ConvertidorString(String.class);
+        ConsultaUsuario consulta = new ConsultaUsuario(new ConstructorDeObjeto());
+        ExtractorDeStringRequest extractor = new ExtractorDeStringRequest(request);
+        Convertidor convertidorUsuario = new ConvertidorUsuario(Usuario.class);
+        Convertidor convertidorString = new ConvertidorString(String.class);
         //obtener el json del request
         String jsonRequest = extractor.extraerStringDeRequest();
         //obtener el usuario del json

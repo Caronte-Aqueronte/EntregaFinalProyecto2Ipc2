@@ -24,14 +24,6 @@ import javax.servlet.http.*;
 @WebServlet(name = "ControladorPerfil", urlPatterns = {"/ControladorPerfil"})
 public class ControladorPerfil extends HttpServlet {
 
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-
-    private ExtractorDeStringRequest extractor;
-    private Convertidor convertidor;
-    private Perfil perfil;
-    private ConsultaUsuario consulta;
-
     /**
      * Metodo que regula todas las request de tipo post que vienen desde el
      * frontend
@@ -44,19 +36,16 @@ public class ControladorPerfil extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //inicializamos el request response 
-        this.request = request;
-        this.response = response;
         //inicializamos el extractor
-        extractor = new ExtractorDeStringRequest(request);
+        ExtractorDeStringRequest extractor = new ExtractorDeStringRequest(request);
         //conseguimos el json de la request
         String jsonRequest = extractor.extraerStringDeRequest();
         switch (request.getHeader("Accion")) {
             case "guardarPerfil":
-                controlarGuardadoDePerfil(jsonRequest);
+                controlarGuardadoDePerfil(jsonRequest, response);
                 break;
             case "retornarPerfil":
-                controlarRetornoDePerfil(jsonRequest);
+                controlarRetornoDePerfil(jsonRequest, response);
                 break;
         }
     }
@@ -69,13 +58,13 @@ public class ControladorPerfil extends HttpServlet {
      * @param jsonRequest
      * @throws IOException
      */
-    private void controlarGuardadoDePerfil(String jsonRequest) throws IOException {
+    private void controlarGuardadoDePerfil(String jsonRequest, HttpServletResponse response) throws IOException {
         //iniicir la consulta
-        consulta = new ConsultaUsuario(new ConstructorDeObjeto());
+        ConsultaUsuario consulta = new ConsultaUsuario(new ConstructorDeObjeto());
         //inicializar el convertidor como un ConvertidorPerfil para obtener el objeto del string jsonRequest
-        convertidor = new ConvertidorPerfil(Perfil.class);
+        Convertidor convertidor = new ConvertidorPerfil(Perfil.class);
         //crear un Perfil con base al json mandado
-        perfil = (Perfil) convertidor.deJsonAClase(jsonRequest);
+        Perfil perfil = (Perfil) convertidor.deJsonAClase(jsonRequest);
         //mandar aingresar el nuevo perfil
         String respuesta = consulta.guardarPerfil(perfil);
         //inicializar el convertidor como ConvertidorString para enviar la respuesta escrita del metodo guardarPerfil
@@ -92,11 +81,11 @@ public class ControladorPerfil extends HttpServlet {
      * @param jsonRequest
      * @throws IOException
      */
-    private void controlarRetornoDePerfil(String jsonRequest) throws IOException {
+    private void controlarRetornoDePerfil(String jsonRequest, HttpServletResponse response) throws IOException {
         //inicializar la consulta
-        consulta = new ConsultaUsuario(new ConstructorDeObjeto());
+        ConsultaUsuario consulta = new ConsultaUsuario(new ConstructorDeObjeto());
         //inicializar el convertidor como un ConvertidorString para obtener el nombre del usuario adjunto en el jsonRequest
-        convertidor = new ConvertidorString(String.class);
+       Convertidor convertidor = new ConvertidorString(String.class);
         //obtener el nombre del usuario del request en el string
         String nombreDeUsuario = (String) convertidor.deJsonAClase(jsonRequest);
         //obtenemos el perfil que corresponde al nombre del usuario que se me mando

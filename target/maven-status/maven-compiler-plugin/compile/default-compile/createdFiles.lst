@@ -9,6 +9,7 @@ Servlets\ControladorCrearUsuario.class
 Servlets\ControladorSubirFoto.class
 ConsultasALaDb\ConsultaUsuario.class
 ConsultasALaDb\ConsultaLogin.class
+ModelosApi\Revista.class
 ConsultasALaDb\ConsultaTag.class
 Convetidores\ConvertidorUsuario.class
 ModelosApi\Perfil.class
@@ -17,12 +18,16 @@ Servlets\ControladorLogin.class
 ConsultasALaDb\Consulta.class
 Convetidores\ConvertidorTagUsuario.class
 Convetidores\ConvertidorResponseModeloLogin.class
-Servlets\ControladorPublicacionRevista.class
+ConsultasALaDb\ConsultaUsuarioLector.class
+Servlets\ControladorAccionRevista.class
 ModelosApi\Usuario.class
 Convetidores\Convertidor.class
 ExtractorDeStringDelRequest\ExtractorDeStringRequest.class
+ConsultasALaDb\ConsultaUsuarioEditor.class
 Servlets\ControladorPerfil.class
 Convetidores\ConvertidorString.class
 Servlets\ControladorTagsDelUsuario.class
 ExtractorDeStringDelRequest\ExtractroDeString.class
+Convetidores\ConvertidorRevistas.class
 ModelosApi\Categoria.class
+Servlets\ControladorAccionRevista$1.class

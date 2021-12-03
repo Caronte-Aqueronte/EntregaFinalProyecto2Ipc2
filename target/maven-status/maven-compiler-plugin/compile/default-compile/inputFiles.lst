@@ -4,6 +4,8 @@ F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\Perfil.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorResponseModeloLogin.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConstructorDeObjeto.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaLogin.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaUsuarioEditor.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorRevistas.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\TagRevista.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorLogin.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorTagUsuario.java
@@ -16,7 +18,6 @@ F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorCrearUsua
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\Consulta.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorTagsDelUsuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\Convertidor.java
-F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorPublicacionRevista.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaUsuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\Tag.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorPerfil.java
@@ -24,5 +25,8 @@ F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\Usuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\TagUsuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaTag.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\Categoria.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaUsuarioLector.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\ModeloResponseLogin.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorUsuario.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\ModelosApi\Revista.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorAccionRevista.java
