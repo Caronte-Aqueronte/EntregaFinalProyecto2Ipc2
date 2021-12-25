@@ -5,10 +5,11 @@
  */
 package Servlets;
 
+import herramientas.ConstructorDeObjeto;
 import ConsultasALaDb.*;
 import Convetidores.*;
-import ExtractorDeStringDelRequest.ExtractorDeStringRequest;
-import ModelosApi.Perfil;
+import herramientas.ExtractorDeStringRequest;
+import modelos.Perfil;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

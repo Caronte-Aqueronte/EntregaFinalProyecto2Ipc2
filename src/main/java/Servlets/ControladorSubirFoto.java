@@ -5,7 +5,7 @@
  */
 package Servlets;
 
-import ConsultasALaDb.ConstructorDeObjeto;
+import herramientas.ConstructorDeObjeto;
 import ConsultasALaDb.ConsultaUsuario;
 import Convetidores.Convertidor;
 import Convetidores.ConvertidorString;

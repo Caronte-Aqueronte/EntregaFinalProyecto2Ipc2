@@ -6,7 +6,7 @@ USE `proyecto_Revistas`;
 
 CREATE TABLE `usuario` (
 `nombre_de_usuario` VARCHAR(100) NOT NULL,
-`password` VARCHAR(100) NOT NULL,
+`password` LONGTEXT,
 `Rol` VARCHAR(45) NOT NULL,
 PRIMARY KEY (`nombre_de_usuario`));
 
@@ -35,7 +35,19 @@ FOREIGN KEY (`categoria`)
 REFERENCES `categoria` (`nombre_de_categoria`)
 ON DELETE NO ACTION
 ON UPDATE CASCADE);
-    
+
+CREATE TABLE `costo_por_dia`(
+`nombre_de_revista` VARCHAR(100) NOT NULL,
+`nombre_de_usuario_creador` VARCHAR(100) NOT NULL,
+`costo_por_dia` DOUBLE(10,2) NOT NULL,
+`fecha_de_validez` DATE NOT NULL,
+PRIMARY KEY (`nombre_de_revista`, `nombre_de_usuario_creador`,`costo_por_dia` , `fecha_de_validez`),
+FOREIGN KEY (`nombre_de_revista` , `nombre_de_usuario_creador`)
+REFERENCES `revista` (`nombre_de_revista` , `nombre_de_usuario_creador`)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+);
+
 CREATE TABLE `edicion` (
 `numero_de_edicion` INT NOT NULL,
 `nombre_de_revista` VARCHAR(100) NOT NULL,
@@ -72,23 +84,35 @@ ON UPDATE CASCADE);
 CREATE TABLE `suscripcion` (
 `nombre_de_revista` VARCHAR(100) NOT NULL,
 `nombre_de_usuario_creador` VARCHAR(100) NOT NULL,
-`usuario_nombre_de_usuario` VARCHAR(100) NOT NULL,
-`fecha_de_suscripcion` DATETIME NOT NULL,
-PRIMARY KEY (`nombre_de_revista`, `nombre_de_usuario_creador`, `usuario_nombre_de_usuario`, `fecha_de_suscripcion`),
+`nombre_de_suscriptor` VARCHAR(100) NOT NULL,
+`tipo_de_suscripcion` VARCHAR(100) NOT NULL,
+`fecha_de_suscripcion` DATE NOT NULL,
+PRIMARY KEY (`nombre_de_revista`, `nombre_de_usuario_creador`, `nombre_de_suscriptor`),
 FOREIGN KEY (`nombre_de_revista` , `nombre_de_usuario_creador`)
 REFERENCES `revista` (`nombre_de_revista` , `nombre_de_usuario_creador`)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION,
-FOREIGN KEY (`usuario_nombre_de_usuario`)
+FOREIGN KEY (`nombre_de_suscriptor`)
 REFERENCES `usuario` (`nombre_de_usuario`)
 ON DELETE CASCADE
 ON UPDATE CASCADE);
 
+CREATE TABLE `pago`(
+`nombre_de_revista` VARCHAR(100) NOT NULL,
+`nombre_de_usuario_creador` VARCHAR(100) NOT NULL,
+`nombre_de_suscriptor` VARCHAR(100) NOT NULL,
+`dinero_pago` DOUBLE(10,2) NOT NULL,
+`fecha_de_pago` DATE NOT NULL,
+PRIMARY KEY (`nombre_de_revista`, `nombre_de_usuario_creador`, `nombre_de_suscriptor`, `fecha_de_pago`),
+FOREIGN KEY (`nombre_de_revista`, `nombre_de_usuario_creador`, `nombre_de_suscriptor`)
+REFERENCES `suscripcion`(`nombre_de_revista`, `nombre_de_usuario_creador`, `nombre_de_suscriptor`)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE `like` (
 `nombre_de_revista` VARCHAR(100) NOT NULL,
 `nombre_de_usuario_creador` VARCHAR(100) NOT NULL,
-`fecha_de_like` DATETIME NOT NULL,
-PRIMARY KEY (`nombre_de_revista`, `nombre_de_usuario_creador`, `fecha_de_like`),
+`fecha_de_like` DATE NOT NULL,
 FOREIGN KEY (`nombre_de_revista` , `nombre_de_usuario_creador`)
 REFERENCES `revista` (`nombre_de_revista` , `nombre_de_usuario_creador`)
 ON DELETE CASCADE
@@ -114,4 +138,49 @@ CREATE TABLE `tag_revista`(
 PRIMARY KEY(`nombre_tag`, `nombre_de_revista`, `nombre_de_usuario_creador`),
 FOREIGN KEY(`nombre_tag`) REFERENCES `tag`(`nombre_tag`) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(`nombre_de_revista`, `nombre_de_usuario_creador`) REFERENCES `revista`(`nombre_de_revista`, `nombre_de_usuario_creador`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `anunciante`(
+`nombre_anunciante` VARCHAR(100) NOT NULL,
+PRIMARY KEY (`nombre_anunciante`)
+);
+
+CREATE TABLE `anuncio`(
+`nombre_anunciante` VARCHAR(100) NOT NULL,
+`nombre_anuncio` VARCHAR(100) NOT NULL,
+`tipo_anuncio` VARCHAR(100) NOT NULL,
+`pago` DOUBLE(10,2) NOT NULL,
+`estado` VARCHAR(100) NOT NULL,
+PRIMARY KEY (`nombre_anunciante`, `nombre_anuncio`),
+FOREIGN KEY (`nombre_anunciante`) REFERENCES `anunciante`(`nombre_anunciante`)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `anuncio_imagen_texto`(
+`nombre_anunciante` VARCHAR(100) NOT NULL,
+`nombre_anuncio` VARCHAR(100) NOT NULL,
+`imagen` BLOB NOT NULL,
+`texto` LONGTEXT NOT NULL,
+PRIMARY KEY (`nombre_anunciante`, `nombre_anuncio`),
+FOREIGN KEY (`nombre_anunciante`, `nombre_anuncio`) REFERENCES `anuncio`(`nombre_anunciante`, `nombre_anuncio`)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `anuncio_texto`(
+`nombre_anunciante` VARCHAR(100) NOT NULL,
+`nombre_anuncio` VARCHAR(100) NOT NULL,
+`texto` LONGTEXT NOT NULL,
+PRIMARY KEY (`nombre_anunciante`, `nombre_anuncio`),
+FOREIGN KEY (`nombre_anunciante`, `nombre_anuncio`) REFERENCES `anuncio`(`nombre_anunciante`, `nombre_anuncio`)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `anuncio_video_texto`(
+`nombre_anunciante` VARCHAR(100) NOT NULL,
+`nombre_anuncio` VARCHAR(100) NOT NULL,
+`link_video` LONGTEXT NOT NULL,
+`texto` LONGTEXT NOT NULL,
+PRIMARY KEY (`nombre_anunciante`, `nombre_anuncio`),
+FOREIGN KEY (`nombre_anunciante`, `nombre_anuncio`) REFERENCES `anuncio`(`nombre_anunciante`, `nombre_anuncio`)
+ON DELETE CASCADE ON UPDATE CASCADE
 );

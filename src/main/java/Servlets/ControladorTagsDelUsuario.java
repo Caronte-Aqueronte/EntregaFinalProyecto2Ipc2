@@ -5,12 +5,12 @@
  */
 package Servlets;
 
-import ConsultasALaDb.ConstructorDeObjeto;
+import herramientas.ConstructorDeObjeto;
 import ConsultasALaDb.ConsultaTag;
 import Convetidores.*;
-import ExtractorDeStringDelRequest.ExtractorDeStringRequest;
-import ModelosApi.Tag;
-import ModelosApi.TagUsuario;
+import herramientas.ExtractorDeStringRequest;
+import modelos.Tag;
+import modelos.TagUsuario;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;

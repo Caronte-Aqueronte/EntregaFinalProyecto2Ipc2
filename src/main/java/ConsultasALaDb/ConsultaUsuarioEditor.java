@@ -5,9 +5,9 @@
  */
 package ConsultasALaDb;
 
-import ModelosApi.Revista;
-import ModelosApi.TagRevista;
-import java.io.InputStream;
+import herramientas.ConstructorDeObjeto;
+import modelos.Revista;
+import modelos.TagRevista;
 import java.sql.*;
 
 /**
@@ -57,7 +57,6 @@ public class ConsultaUsuarioEditor extends ConsultaUsuario {
             }
             return "No se publico tu revista \"" + revista.getNombreRevista() + "\".";
         } catch (SQLException ex) {
-            ex.printStackTrace();
             return "No se publico tu revista \"" + revista.getNombreRevista() + "\".";
         }
     }
@@ -110,24 +109,27 @@ public class ConsultaUsuarioEditor extends ConsultaUsuario {
         }
     }
     
-    public InputStream traerPdf(String nombreUsuario) {
+    public String guardarEstadosDeInteracciones(Revista revista){
         try {
-
-            PreparedStatement query = CONEXION.prepareStatement(
-                    "SELECT miniatura FROM revista WHERE nombre_de_revista = ?;");//statement que guardara el blob de la foto de perfil
-            query.setString(1, nombreUsuario);//dar valor al ?
-            ResultSet resultado = query.executeQuery();//ejecutamos la query
-            while (resultado.next()) {//si entra al while etonces exite la foto de usuario
-                return resultado.getBlob("miniatura").getBinaryStream();//obtener el blod y apartir de el obtener el InputStream
+            PreparedStatement query =CONEXION.prepareStatement(//query que modifica las interacciones de una revista
+            "UPDATE revista SET estado_de_suscripciones = ?, estado_de_comentarios = ?, "
+                    + "estado_de_likes = ? WHERE nombre_de_revista = ? AND nombre_de_usuario_creador = ?;");
+            query.setString(1, revista.getEstadoSuscripcion());//le damos valores a los ?
+            query.setString(2, revista.getEstadoComentarios());//
+            query.setString(3, revista.getEstadoLikes());//
+            query.setString(4, revista.getNombreRevista());//
+            query.setString(5, revista.getUsuarioCreador());//
+            if(query.executeUpdate() > 0){//si se edito mas de 0 entonces si surieron efecto los cambios
+                CONEXION.commit();//realizamos el commit y respondemos al usuario
+                return "Se guardaron tus configuraciones con exito.";
             }
-            return null;
-
-        } catch (SQLException ex) {
-            try {//si hay error deshacemos todos los cambios
+            return "No se guardaron tus configuraciones.";
+        } catch (SQLException e) {
+            try {
                 CONEXION.rollback();
-            } catch (SQLException e) {
+            } catch (SQLException ex) {
             }
-            return null;
+            return "No se actualizaron tus configuraciones debido a un error con el servidor";
         }
     }
 }

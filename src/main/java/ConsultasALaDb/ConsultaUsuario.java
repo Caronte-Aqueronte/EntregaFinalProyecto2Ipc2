@@ -1,7 +1,9 @@
 package ConsultasALaDb;
 
-import ModelosApi.Perfil;
-import ModelosApi.Usuario;
+import herramientas.ConstructorDeObjeto;
+import modelos.Perfil;
+import modelos.Usuario;
+import herramientas.Encriptador;
 
 import java.io.*;
 import java.sql.*;
@@ -14,6 +16,8 @@ public class ConsultaUsuario extends Consulta {
     }
 
     public String crearUsuario(Usuario usuario) {
+        Encriptador enciptador = new Encriptador();
+        String passwordEncriptada = enciptador.encriptarPassword(usuario.getPassword());
         try {
 
             InputStream stream = ConsultaUsuario.class.getResourceAsStream("/imagenes/usuario.png");
@@ -21,7 +25,7 @@ public class ConsultaUsuario extends Consulta {
                 PreparedStatement query = CONEXION.prepareStatement(//query con la sintaxis para insertar un nuevo usuario en usuarios
                         "INSERT INTO usuario VALUES (?,?,?)");
                 query.setString(1, usuario.getUsuario());//damos valores a los ?
-                query.setString(2, usuario.getPassword());//
+                query.setString(2, passwordEncriptada);//
                 query.setString(3, usuario.getRol());//
                 query.executeUpdate();//ejecutamos la query de insertar un usuario
                 query = CONEXION.prepareStatement(//queda crear el perfil

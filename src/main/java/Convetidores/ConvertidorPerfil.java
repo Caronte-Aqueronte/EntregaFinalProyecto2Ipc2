@@ -5,7 +5,7 @@
  */
 package Convetidores;
 
-import ModelosApi.Perfil;
+import modelos.Perfil;
 
 /**
  *

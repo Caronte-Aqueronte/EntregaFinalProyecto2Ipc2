@@ -1,6 +1,6 @@
 package Convetidores;
 
-import ModelosApi.Usuario;
+import modelos.Usuario;
 
 public class ConvertidorUsuario extends Convertidor<Usuario> {
 

@@ -5,13 +5,13 @@
  */
 package Servlets;
 
-import ConsultasALaDb.ConstructorDeObjeto;
+import herramientas.ConstructorDeObjeto;
 import ConsultasALaDb.ConsultaUsuario;
 import Convetidores.Convertidor;
 import Convetidores.ConvertidorString;
 import Convetidores.ConvertidorUsuario;
-import ExtractorDeStringDelRequest.ExtractorDeStringRequest;
-import ModelosApi.Usuario;
+import herramientas.ExtractorDeStringRequest;
+import modelos.Usuario;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

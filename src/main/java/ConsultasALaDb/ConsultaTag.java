@@ -5,8 +5,9 @@
  */
 package ConsultasALaDb;
 
-import ModelosApi.Tag;
-import ModelosApi.TagUsuario;
+import herramientas.ConstructorDeObjeto;
+import modelos.Tag;
+import modelos.TagUsuario;
 import java.sql.*;
 import java.util.ArrayList;
 

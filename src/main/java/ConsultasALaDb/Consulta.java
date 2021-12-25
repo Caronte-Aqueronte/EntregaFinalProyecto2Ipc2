@@ -5,8 +5,12 @@
  */
 package ConsultasALaDb;
 
-import ConexionAMySql.ConexionSql;
-import ModelosApi.*;
+import modelos.Categoria;
+import modelos.InteraccionConRevista;
+import modelos.Perfil;
+import modelos.TagUsuario;
+import herramientas.ConstructorDeObjeto;
+import herramientas.ConexionSql;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -133,4 +137,26 @@ public abstract class Consulta extends ConexionSql {
         }
     }
 
+    /**
+     * Busca los estados de una revista en la tabla Revista de la base de datos
+     * y a partir de la infomacion construye los estados.
+     *
+     * @param nombreRevista
+     * @param nombreUsuarioCreador
+     * @return
+     */
+    public InteraccionConRevista saberEstadoDeInteraccionesConRevista(String nombreRevista, String nombreUsuarioCreador) {
+        try {
+            PreparedStatement query = CONEXION.prepareStatement(//manda a traer los estados de los comnetearios, likes y suscripciones
+                    "SELECT estado_de_suscripciones, estado_de_comentarios, estado_de_likes FROM revista"
+                    + " WHERE nombre_de_revista = ? AND nombre_de_usuario_creador = ?;");
+            query.setString(1, nombreRevista);///damos valores a los ?
+            query.setString(2, nombreUsuarioCreador);//
+            ResultSet resultado = query.executeQuery();//ejecutar la query
+            InteraccionConRevista interacciones = constructorObjeto.constrirInteracciones(resultado);//construir los estados a partir del resultado de ejecutar la query
+            return interacciones;
+        } catch (SQLException ex) {
+            return new InteraccionConRevista(false, false, false);
+        }
+    }
 }
