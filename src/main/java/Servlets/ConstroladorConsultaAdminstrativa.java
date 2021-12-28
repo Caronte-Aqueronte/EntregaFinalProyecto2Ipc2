@@ -17,16 +17,22 @@ import javax.servlet.http.HttpServletResponse;
 import herramientas.ConstructorDeObjeto;
 import Convetidores.*;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
+import javax.servlet.annotation.MultipartConfig;
 import modelos.Anunciante;
+import modelos.AnuncioImagen;
+import modelos.AnuncioTexto;
 import modelos.CostoPorDia;
 import modelos.Revista;
+import modelos.TagAnuncio;
 
 /**
  *
  * @author Luis Monterroso
  */
 @WebServlet(name = "ConstroladorConsultaAdminstrativa", urlPatterns = {"/ConstroladorConsultaAdminstrativa"})
+@MultipartConfig(location = "tmp")
 public class ConstroladorConsultaAdminstrativa extends HttpServlet {
 
     /**
@@ -42,19 +48,33 @@ public class ConstroladorConsultaAdminstrativa extends HttpServlet {
             throws ServletException, IOException {
         //extraemos el json del reuqest independientemente haya o no haya
         ExtractorDeStringRequest extractor = new ExtractorDeStringRequest(request);
-        String jsonRequest = extractor.extraerStringDeRequest();
+        String jsonRequest;
         switch (request.getHeader("Accion")) {
             case "asignarCostoPorDia":
+                jsonRequest = extractor.extraerStringDeRequest();
                 asignarCostoPorDia(jsonRequest, response);
                 break;
             case "verCostoPorDia":
+                jsonRequest = extractor.extraerStringDeRequest();
                 verCostoPorDia(jsonRequest, response);
                 break;
             case "crearAnunciante":
+                jsonRequest = extractor.extraerStringDeRequest();
                 crearAnunciante(jsonRequest, response);
                 break;
             case "traerAnunciantes":
                 traerAnunciantes(response);
+                break;
+            case "guardarTagsAnuncio":
+                jsonRequest = extractor.extraerStringDeRequest();
+                guardarTagsAnuncio(jsonRequest, response);
+                break;
+            case "guardarAnuncioTexto":
+                jsonRequest = extractor.extraerStringDeRequest();
+                guardarAnuncioTexto(jsonRequest, response);
+                break;
+            case "guardarAnuncioImagen":
+                guardarAnuncioImagen(request, response);
                 break;
         }
     }
@@ -98,5 +118,43 @@ public class ConstroladorConsultaAdminstrativa extends HttpServlet {
         ArrayList<Anunciante> anunciantes = consulta.traerAnunciantes();//mandamos a traer todos los anunciantes
         String jsonReposponse = gson.toJson(anunciantes);//construimos el json con gson
         response.getWriter().append(jsonReposponse);
+    }
+
+    public void guardarTagsAnuncio(String jsonRequest, HttpServletResponse response) throws IOException {
+        ConsultaUsuarioAdministrador consulta = new ConsultaUsuarioAdministrador(new ConstructorDeObjeto());
+        Gson gson = new Gson();//creamos un objeto gson para obtener los tags del rquest
+        Convertidor convertidorString = new ConvertidorString(String.class);//convertidor para crear el jsonResponse
+        ArrayList<TagAnuncio> tags = gson.fromJson(jsonRequest, new TypeToken<ArrayList<TagAnuncio>>() {
+        }.getType());//traemos los tags que estan contenidos enel request
+        String confirmacion = consulta.guardarTagsAnuncio(tags);//mandamos a guardar los tags
+        String jsonReponse = convertidorString.deObjetoAJson(confirmacion);
+        response.getWriter().append(jsonReponse);
+    }
+
+    public void guardarAnuncioTexto(String jsonRequest, HttpServletResponse response) throws IOException {
+        ConsultaUsuarioAdministrador consulta = new ConsultaUsuarioAdministrador(new ConstructorDeObjeto());
+        Convertidor convertidorAnuncio = new ConvertidorAnuncioTexto(AnuncioTexto.class);//convertidor para extraer el anuncio de texto de la quequest
+        Convertidor convertidorString = new ConvertidorString(String.class);//convertidor para crear el jsonResponse
+        AnuncioTexto anuncio = (AnuncioTexto) convertidorAnuncio.deJsonAClase(jsonRequest);//traemos el anuncio del request
+        String confirmacion = consulta.gurdarAnuncioDeTexto(anuncio);//mandamos a guardar el anunciante
+        String jsonReponse = convertidorString.deObjetoAJson(confirmacion);
+        response.getWriter().append(jsonReponse);
+    }
+
+    public void guardarAnuncioImagen(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        ConsultaUsuarioAdministrador consulta = new ConsultaUsuarioAdministrador(new ConstructorDeObjeto());
+        Convertidor convertidorString = new ConvertidorString(String.class);//convertidor para crear el jsonResponse
+        AnuncioImagen anuncio = consulta.getConstructorObjeto().construirAnuncioImagenDeRequest(request);
+        String confirmacion = consulta.guardarAnuncioImagen(anuncio);//mandamos a guardar el anunciante
+        String jsonReponse = convertidorString.deObjetoAJson(confirmacion);
+        response.getWriter().append(jsonReponse);
+    }
+    public void guardarAnuncioVideo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        ConsultaUsuarioAdministrador consulta = new ConsultaUsuarioAdministrador(new ConstructorDeObjeto());
+        Convertidor convertidorString = new ConvertidorString(String.class);//convertidor para crear el jsonResponse
+        AnuncioImagen anuncio = consulta.getConstructorObjeto().construirAnuncioImagenDeRequest(request);
+        String confirmacion = consulta.guardarAnuncioImagen(anuncio);//mandamos a guardar el anunciante
+        String jsonReponse = convertidorString.deObjetoAJson(confirmacion);
+        response.getWriter().append(jsonReponse);
     }
 }

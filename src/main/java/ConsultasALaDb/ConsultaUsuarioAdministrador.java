@@ -6,10 +6,10 @@
 package ConsultasALaDb;
 
 import herramientas.ConstructorDeObjeto;
-import modelos.CostoPorDia;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import modelos.Anunciante;
+import modelos.*;
 
 /**
  *
@@ -65,7 +65,6 @@ public class ConsultaUsuarioAdministrador extends ConsultaUsuario {
                 CONEXION.rollback();
             } catch (SQLException ex) {
             }
-            e.printStackTrace();
             return "No se guardo el anunciante debido a un error en el servidor. Puede deberse a que ya existe un anunciante con el mismo nombre";
         }
     }
@@ -79,6 +78,94 @@ public class ConsultaUsuarioAdministrador extends ConsultaUsuario {
             return anunciantes;
         } catch (SQLException e) {
             return anunciantes;
+        }
+    }
+
+    public String gurdarAnuncioDeTexto(AnuncioTexto anuncio) {
+        try {
+            AnuncioTexto anuncioReal = new AnuncioTexto(anuncio.getTexto(), anuncio.getNombreAnuncio(), anuncio.getNombreAnunciante());
+            PreparedStatement queryInsercionAnuncio = CONEXION.prepareStatement(
+                    "INSERT INTO anuncio VALUES (?,?,?,?,?,?);");//inserta una nueva tupla dentro de la tabla anuncio
+            queryInsercionAnuncio.setString(1, anuncioReal.getNombreAnunciante());//damos valores a los ?
+            queryInsercionAnuncio.setString(2, anuncioReal.getNombreAnuncio());//
+            queryInsercionAnuncio.setString(3, anuncioReal.getTipoAnuncio());//
+            queryInsercionAnuncio.setDouble(4, anuncioReal.getPago());//
+            queryInsercionAnuncio.setString(5, anuncioReal.getEstado());//
+            queryInsercionAnuncio.setString(6, LocalDate.now().toString());//obtenemos la fecha de hoy
+            if (queryInsercionAnuncio.executeUpdate() > 0) {
+                PreparedStatement queryInsercionAnuncioTexto = CONEXION.prepareStatement(
+                        "INSERT INTO anuncio_texto VALUES (?,?,?)");
+                queryInsercionAnuncioTexto.setString(1, anuncioReal.getNombreAnunciante());//damos valores a los ?
+                queryInsercionAnuncioTexto.setString(2, anuncioReal.getNombreAnuncio());//
+                queryInsercionAnuncioTexto.setString(3, anuncioReal.getTexto());//
+                if (queryInsercionAnuncioTexto.executeUpdate() > 0) {//si al ejecutarse se afecta mas de una tupla entonces se inserto el anuncio
+                    CONEXION.commit();//hacer el commit
+                    return "Se inserto el anuncio con exito.";
+                }
+            }
+            return "No se registro el anuncio.";
+        } catch (SQLException ex) {
+            try {
+                CONEXION.rollback();
+            } catch (SQLException e) {
+            }
+            return "No se registro el anuncio debido a un error con el servidor.";
+        }
+    }
+     public String guardarAnuncioImagen(AnuncioImagen anuncio) {
+        try {
+            PreparedStatement queryInsercionAnuncio = CONEXION.prepareStatement(
+                    "INSERT INTO anuncio VALUES (?,?,?,?,?,?);");//inserta una nueva tupla dentro de la tabla anuncio
+            queryInsercionAnuncio.setString(1, anuncio.getNombreAnunciante());//damos valores a los ?
+            queryInsercionAnuncio.setString(2, anuncio.getNombreAnuncio());//
+            queryInsercionAnuncio.setString(3, anuncio.getTipoAnuncio());//
+            queryInsercionAnuncio.setDouble(4, anuncio.getPago());//
+            queryInsercionAnuncio.setString(5, anuncio.getEstado());//
+            queryInsercionAnuncio.setString(6, LocalDate.now().toString());//obtenemos la fecha de hoy
+            if (queryInsercionAnuncio.executeUpdate() > 0) {
+                PreparedStatement queryInsercionAnuncioTexto = CONEXION.prepareStatement(
+                        "INSERT INTO anuncio_imagen_texto VALUES (?,?,?,?)");
+                queryInsercionAnuncioTexto.setString(1, anuncio.getNombreAnunciante());//damos valores a los ?
+                queryInsercionAnuncioTexto.setString(2, anuncio.getNombreAnuncio());//
+                queryInsercionAnuncioTexto.setBlob(3, anuncio.getImagen());//
+                 queryInsercionAnuncioTexto.setString(4, anuncio.getTexto());//
+                if (queryInsercionAnuncioTexto.executeUpdate() > 0) {//si al ejecutarse se afecta mas de una tupla entonces se inserto el anuncio
+                    CONEXION.commit();//hacer el commit
+                    return "Se inserto el anuncio con exito.";
+                }
+            }
+            return "No se registro el anuncio.";
+        } catch (SQLException ex) {
+            try {
+                CONEXION.rollback();
+            } catch (SQLException e) {
+            }
+            return "No se registro el anuncio debido a un error con el servidor.";
+        }
+    }
+    public String guardarTagsAnuncio(ArrayList<TagAnuncio> tags){
+        try {
+            for(TagAnuncio item: tags){
+                PreparedStatement query = CONEXION.prepareStatement(
+                        "INSERT INTO tag_anuncio VALUES (?,?,?)");
+                query.setString(1, item.getNombreTag());//damos los valoes con los atributos de la clase TagAnuncio
+                query.setString(2, item.getNombreAunciante());//
+                query.setString(3, item.getNombreAnuncio());//
+                if(query.executeUpdate() > 0){//si al ejecutar la query no se inserta nada formazmos un roklback
+                    CONEXION.commit();
+                }else{
+                   throw new SQLException(); 
+                }
+            }
+            //si acaba el for each entonces mandamos un mensaje de confirmacion exitoso
+            return "Se guardaron todos tus tags con exito.";
+        } catch (SQLException e) {
+            try {
+                CONEXION.rollback();
+            } catch (SQLException ex) {
+                
+            }
+            return "No se guardaron los tags";
         }
     }
 }

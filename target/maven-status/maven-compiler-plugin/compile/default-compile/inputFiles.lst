@@ -17,14 +17,17 @@ F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\InteraccionConRevista
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorBooleano.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\herramientas\ExtractorDeStringRequest.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\Revista.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaUsuarioAdministrador.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorConsulaUsuarioEditor.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaTag.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorSubirRevista.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaUsuarioLector.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\Categoria.java
-F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaAdministrativa.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorUsuario.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\Anuncio.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorAnunciante.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorPerfil.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\Anunciante.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\herramientas\Encriptador.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaLogin.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaUsuarioEditor.java
@@ -32,6 +35,7 @@ F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorPago.
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorTagUsuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\TagUsuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\herramientas\ExtractroDeString.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\AnuncioTexto.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\ModeloResponseLogin.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorRetornarTags.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorCrearUsuario.java
@@ -42,7 +46,9 @@ F:\NetBeansProjects\revistas-app-api\src\main\java\herramientas\ConexionSql.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\Perfil.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaUsuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorPerfil.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorAnuncioTexto.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\herramientas\ConstructorDeObjeto.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\TagAnuncio.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\Usuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorAccionRevista.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorComentario.java

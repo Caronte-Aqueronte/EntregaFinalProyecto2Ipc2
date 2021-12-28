@@ -235,4 +235,13 @@ public class ConstructorDeObjeto {
             return anunciantes;
         }
     }
+    
+    public AnuncioImagen construirAnuncioImagenDeRequest(HttpServletRequest request) throws IOException, ServletException{
+         //construimos un objeto revista a partir del formData que vendra en la request
+        String texto = request.getParameter("texto");
+        String nombreAnuncio = request.getParameter("nombreAnuncio");
+        String nombreAnunciante = request.getParameter("nombreAnunciante");
+        InputStream imagen = request.getPart("imagen").getInputStream();
+        return new AnuncioImagen(texto, imagen, nombreAnuncio, nombreAnunciante);
+    }
 }
