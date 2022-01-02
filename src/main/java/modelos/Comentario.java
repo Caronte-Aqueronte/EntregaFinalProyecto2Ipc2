@@ -5,18 +5,24 @@
  */
 package modelos;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Luis Monterroso
  */
 public class Comentario extends Revista{
+    
     private String contenidoComentario;
+    private LocalDate fechaDeComentario;
 
-    public Comentario(String contenidoComentario, String nombreRevista, String usuarioCreador) {
+    public Comentario(String contenidoComentario, LocalDate fechaDeComentario, String nombreRevista, String usuarioCreador) {
         super(nombreRevista, usuarioCreador);
         this.contenidoComentario = contenidoComentario;
+        this.fechaDeComentario = fechaDeComentario;
     }
-
+    
     public String getContenidoComentario() {
         return contenidoComentario;
     }
@@ -24,5 +30,15 @@ public class Comentario extends Revista{
     public void setContenidoComentario(String contenidoComentario) {
         this.contenidoComentario = contenidoComentario;
     }
+
+    public LocalDate getFechaDeComentario() {
+        return fechaDeComentario;
+    }
+
+    public void setFechaDeComentario(LocalDate fechaDeComentario) {
+        this.fechaDeComentario = fechaDeComentario;
+    }
+
+
     
 }

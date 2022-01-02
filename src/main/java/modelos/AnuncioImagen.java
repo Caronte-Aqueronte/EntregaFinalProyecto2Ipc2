@@ -13,7 +13,7 @@ import java.io.InputStream;
  */
 public class AnuncioImagen extends Anuncio {
 
-    private String texto;
+    private String textoAnuncio;
     private InputStream imagen;
 
     /**
@@ -24,20 +24,20 @@ public class AnuncioImagen extends Anuncio {
      * @param nombreAnuncio
      * @param nombreAnunciante
      */
-    public AnuncioImagen(String texto, InputStream imagen, String nombreAnuncio, String nombreAnunciante) {
+    public AnuncioImagen(String textoAnuncio, InputStream imagen, String nombreAnuncio, String nombreAnunciante) {
         super(nombreAnuncio, "Imagen", 200, "Activo", nombreAnunciante);
-        this.texto = texto;
+        this.textoAnuncio = textoAnuncio;
         this.imagen = imagen;
     }
 
 
     
     public String getTexto() {
-        return texto;
+        return textoAnuncio;
     }
 
     public void setTexto(String texto) {
-        this.texto = texto;
+        this.textoAnuncio = texto;
     }
 
     public InputStream getImagen() {

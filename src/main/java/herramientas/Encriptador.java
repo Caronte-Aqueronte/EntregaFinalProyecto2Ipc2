@@ -5,9 +5,17 @@
  */
 package herramientas;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
@@ -35,7 +43,6 @@ public class Encriptador {
         for (int x = 0; x < 5; x++) {
             password = getAES(password);
         }
-        System.out.println(password);
         return password;
     }
 
@@ -56,10 +63,9 @@ public class Encriptador {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
             return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes("UTF-8")));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (UnsupportedEncodingException | InvalidAlgorithmParameterException | InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException e) {
+            return null;
         }
-        return null;
     }
 
 }

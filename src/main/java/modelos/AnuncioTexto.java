@@ -11,7 +11,7 @@ package modelos;
  */
 public class AnuncioTexto extends Anuncio {
 
-    private String texto;
+    private String textoAnuncio;
 
     /**
      * Crea un anuncio de texto para insertar en la db
@@ -22,30 +22,32 @@ public class AnuncioTexto extends Anuncio {
      */
     public AnuncioTexto(String texto, String nombreAnuncio, String nombreAnunciante) {
         super(nombreAnuncio, "Texto", 100, "Activo", nombreAnunciante);
-        this.texto = texto;
+        this.textoAnuncio = texto;
     }
 
     /**
      * Crea un anuncio desde cero
      *
-     * @param texto
+     * @param textoAnuncio
      * @param nombreAnuncio
      * @param tipoAnuncio
      * @param pago
      * @param estado
      * @param nombreAnunciante
      */
-    public AnuncioTexto(String texto, String nombreAnuncio, String tipoAnuncio, double pago, String estado, String nombreAnunciante) {
+    public AnuncioTexto(String textoAnuncio, String nombreAnuncio, String tipoAnuncio, double pago, String estado, String nombreAnunciante) {
         super(nombreAnuncio, tipoAnuncio, pago, estado, nombreAnunciante);
-        this.texto = texto;
+        this.textoAnuncio = textoAnuncio;
     }
 
-    public String getTexto() {
-        return texto;
+    public String getTextoAnuncio() {
+        return textoAnuncio;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setTextoAnuncio(String textoAnuncio) {
+        this.textoAnuncio = textoAnuncio;
     }
+
+   
 
 }

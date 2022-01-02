@@ -33,4 +33,14 @@ public class ManejadorDeFecha {
         Period periodo = Period.between(primeraFechaLocalDate, segundaFechaLocalDate);
         return periodo.getYears();//retornamos los meses 
     }
+    
+      public int verDiasEntreFechas(String primeraFecha, String segundaFecha) {
+        //convertimos la fecha en un localdate
+        LocalDate primeraFechaLocalDate = LocalDate.parse(primeraFecha);
+        //convertimos la fecha en un localdate
+        LocalDate segundaFechaLocalDate = LocalDate.parse(segundaFecha);
+        //creamos un periodo entre las dos fechas
+        Period periodo = Period.between(primeraFechaLocalDate, segundaFechaLocalDate);
+        return periodo.getDays();//retornamos los dias entre las dos fechas
+    }
 }

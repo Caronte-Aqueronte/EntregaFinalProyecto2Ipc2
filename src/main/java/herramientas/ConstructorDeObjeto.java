@@ -4,10 +4,13 @@ import modelos.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import modelosReportes.*;
+import modelosReportes.LikeDeRevista;
 
 public class ConstructorDeObjeto {
 
@@ -166,9 +169,10 @@ public class ConstructorDeObjeto {
                 //a partir de las columnas conrenidoas en el resultSet traer todos los valores de las tuplas
                 String nombreRevista = resultado.getString("nombre_de_revista");
                 String usuarioCreador = resultado.getString("revista_nombre_de_usuario_creador");
+                LocalDate fechaCreacion = resultado.getDate("fecha_de_comentario").toLocalDate();
                 String contenidoComentario = resultado.getString("contenido_de_comentario");
                 //a patir de los valores crear un nuevo comentario
-                Comentario comentario = new Comentario(contenidoComentario, nombreRevista, usuarioCreador);
+                Comentario comentario = new Comentario(contenidoComentario, fechaCreacion, nombreRevista, usuarioCreador);
                 //anadir el nuevo comentario al array
                 comentarios.add(comentario);
             }
@@ -235,13 +239,132 @@ public class ConstructorDeObjeto {
             return anunciantes;
         }
     }
-    
-    public AnuncioImagen construirAnuncioImagenDeRequest(HttpServletRequest request) throws IOException, ServletException{
-         //construimos un objeto revista a partir del formData que vendra en la request
+
+    public AnuncioImagen construirAnuncioImagenDeRequest(HttpServletRequest request) throws IOException, ServletException {
+        //construimos un objeto revista a partir del formData que vendra en la request
         String texto = request.getParameter("texto");
         String nombreAnuncio = request.getParameter("nombreAnuncio");
         String nombreAnunciante = request.getParameter("nombreAnunciante");
         InputStream imagen = request.getPart("imagen").getInputStream();
         return new AnuncioImagen(texto, imagen, nombreAnuncio, nombreAnunciante);
+    }
+
+    public ArrayList<Anuncio> construirAnuncios(ResultSet resultado) {
+        ArrayList<Anuncio> anuncios = new ArrayList<>();
+        try {
+            //explorar el resulado, conseguir ls parametros de un Anuncio y construir uno a partir de ello
+            while (resultado.next()) {
+                String nombreAnunciante = resultado.getString("nombre_anunciante");
+                String nombreAnuncio = resultado.getString("nombre_anuncio");
+                String tipoAnuncio = resultado.getString("tipo_anuncio");
+                double pago = resultado.getDouble("pago");
+                String estado = resultado.getString("estado");
+                String fechaDeCreacion = resultado.getString("fecha_creacion");
+                //crear el anuncio y agregarlos al array
+                Anuncio anuncio = new Anuncio(nombreAnuncio, tipoAnuncio, pago, estado, fechaDeCreacion, nombreAnunciante);
+                anuncios.add(anuncio);
+            }
+            return anuncios;
+        } catch (SQLException e) {
+            return anuncios;
+        }
+    }
+
+    public ArrayList<Suscripcion> construirSuscripciones(ResultSet resultado) {
+        ArrayList<Suscripcion> suscripciones = new ArrayList<>();//array vacio en caso de eerror devolver ese
+        try {
+            //exploramos el ResultSet moviendo el cursor con .next() y obtenemos las columnas del mismo
+            while (resultado.next()) {
+                //obtener los parametros para crear una nueva suscripcion
+                String nombreRevista = resultado.getString("nombre_de_revista");
+                String usuarioCreador = resultado.getString("nombre_de_usuario_creador");
+                String nombreUsuario = resultado.getString("nombre_de_suscriptor");
+                String metodoPago = resultado.getString("tipo_de_suscripcion");
+                String fechaSuscripcion = resultado.getString("fecha_de_suscripcion");
+                Suscripcion suscripcion = new Suscripcion(nombreUsuario, metodoPago, fechaSuscripcion, nombreRevista, usuarioCreador);
+                suscripciones.add(suscripcion);//agregamos la nueva suscripcion
+            }
+            return suscripciones;
+        } catch (SQLException e) {
+            return suscripciones;
+        }
+    }
+
+    public ArrayList<LikeDeRevista> likesDeRevista(ResultSet resultado) {
+        ArrayList<LikeDeRevista> likes = new ArrayList<>();
+        try {
+            //exploreamos el resultset moviendo el cursor
+            while (resultado.next()) {
+                //obtenemos los valores de cada tupla para crear el objeto like
+                String nombreRevista = resultado.getString("nombre_de_revista");
+                String usuarioCreador = resultado.getString("nombre_de_usuario_creador");
+                LocalDate fechaLike = resultado.getDate("fecha_de_like").toLocalDate();
+                int numeroLikes = resultado.getInt("numero_de_likes");
+                LikeDeRevista like = new LikeDeRevista(fechaLike, numeroLikes, nombreRevista, usuarioCreador);
+                likes.add(like);//anadimos el like al array
+            }
+            return likes;
+        } catch (SQLException e) {
+            return likes;
+        }
+    }
+
+    public ArrayList<LikeDeRevista> likesDeUnaRevista(ResultSet resultado) {
+        ArrayList<LikeDeRevista> likes = new ArrayList<>();
+        try {
+            //exploreamos el resultset moviendo el cursor
+            while (resultado.next()) {
+                //obtenemos los valores de cada tupla para crear el objeto like
+                String nombreRevista = resultado.getString("nombre_de_revista");
+                String usuarioCreador = resultado.getString("nombre_de_usuario_creador");
+                LocalDate fechaLike = resultado.getDate("fecha_de_like").toLocalDate();
+                LikeDeRevista like = new LikeDeRevista(fechaLike, nombreRevista, usuarioCreador);
+                likes.add(like);//anadimos el like al array
+            }
+            return likes;
+        } catch (SQLException e) {
+            return likes;
+        }
+    }
+
+    public ArrayList<GananciaPorSuscripcion> construirGanancias(ResultSet resultado) {
+        ArrayList<GananciaPorSuscripcion> ganancias = new ArrayList<>();
+        try {
+            //exploramos cada tipla del resultSet para obtener sus columnas
+            while (resultado.next()) {
+                String fechaPago = resultado.getString("fecha_de_pago");//obtenemos cada cpolumna del resultset para poder crear un objeto
+                String nombreUsuario = resultado.getString("nombre_de_suscriptor");//
+                String nombreRevista = resultado.getString("nombre_de_revista");//
+                String usuarioCreador = resultado.getString("nombre_de_usuario_creador");//
+                double totalDeGanancia = resultado.getDouble("ganancia");//
+                GananciaPorSuscripcion gananciaSuscripcion = new GananciaPorSuscripcion(totalDeGanancia, fechaPago,
+                        nombreUsuario, nombreRevista, usuarioCreador);//creamos el nuevo objeto que representa la ganancia por suscripcion
+                ganancias.add(gananciaSuscripcion);
+            }
+            return ganancias;
+        } catch (SQLException e) {
+            return ganancias;
+        }
+    }
+
+    public ArrayList<GananciaPorSuscripcionAdminsrativa> construirGananciasPorSuscripcionAdministrativa(ResultSet resultSet) {
+        ArrayList<GananciaPorSuscripcionAdminsrativa> ganancias = new ArrayList<>();
+        try {
+            //exploreamos el resultSet para obtener sus columnas
+            while (resultSet.next()) {
+                String fechaPago = resultSet.getString("fecha_de_pago");//obtenemos cada cpolumna del resultset para poder crear un objeto
+                String nombreUsuario = resultSet.getString("nombre_de_suscriptor");//
+                String nombreRevista = resultSet.getString("nombre_de_revista");//
+                String usuarioCreador = resultSet.getString("nombre_de_usuario_creador");//
+                double totalDeGanancia = resultSet.getDouble("ganancia");//
+                double ingreso = resultSet.getDouble("ingreso");//
+                GananciaPorSuscripcionAdminsrativa ganancia = new GananciaPorSuscripcionAdminsrativa(ingreso, totalDeGanancia,
+                        fechaPago, nombreUsuario, nombreRevista, usuarioCreador);
+                ganancias.add(ganancia);
+            }
+            return ganancias;
+        } catch (SQLException e) {
+            return ganancias;
+        }
     }
 }

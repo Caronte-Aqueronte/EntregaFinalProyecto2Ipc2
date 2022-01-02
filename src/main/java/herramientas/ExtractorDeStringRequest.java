@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
-public class ExtractorDeStringRequest implements ExtractroDeString {
+public class ExtractorDeStringRequest implements ExtractorDeString {
 
     private HttpServletRequest request;
 

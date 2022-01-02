@@ -6,7 +6,7 @@ USE `proyecto_Revistas`;
 
 CREATE TABLE `usuario` (
 `nombre_de_usuario` VARCHAR(100) NOT NULL,
-`password` LONGTEXT,
+`password` LONGTEXT NOT NULL,
 `Rol` VARCHAR(45) NOT NULL,
 PRIMARY KEY (`nombre_de_usuario`));
 
@@ -140,6 +140,7 @@ FOREIGN KEY(`nombre_tag`) REFERENCES `tag`(`nombre_tag`) ON DELETE CASCADE ON UP
 FOREIGN KEY(`nombre_de_revista`, `nombre_de_usuario_creador`) REFERENCES `revista`(`nombre_de_revista`, `nombre_de_usuario_creador`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
 CREATE TABLE `anunciante`(
 `nombre_anunciante` VARCHAR(100) NOT NULL,
 PRIMARY KEY (`nombre_anunciante`)
@@ -151,6 +152,7 @@ CREATE TABLE `anuncio`(
 `tipo_anuncio` VARCHAR(100) NOT NULL,
 `pago` DOUBLE(10,2) NOT NULL,
 `estado` VARCHAR(100) NOT NULL,
+`fecha_creacion` DATE NOT NULL,
 PRIMARY KEY (`nombre_anunciante`, `nombre_anuncio`),
 FOREIGN KEY (`nombre_anunciante`) REFERENCES `anunciante`(`nombre_anunciante`)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -159,7 +161,7 @@ ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE `anuncio_imagen_texto`(
 `nombre_anunciante` VARCHAR(100) NOT NULL,
 `nombre_anuncio` VARCHAR(100) NOT NULL,
-`imagen` BLOB NOT NULL,
+`imagen` LONGBLOB NOT NULL,
 `texto` LONGTEXT NOT NULL,
 PRIMARY KEY (`nombre_anunciante`, `nombre_anuncio`),
 FOREIGN KEY (`nombre_anunciante`, `nombre_anuncio`) REFERENCES `anuncio`(`nombre_anunciante`, `nombre_anuncio`)
@@ -181,6 +183,26 @@ CREATE TABLE `anuncio_video_texto`(
 `link_video` LONGTEXT NOT NULL,
 `texto` LONGTEXT NOT NULL,
 PRIMARY KEY (`nombre_anunciante`, `nombre_anuncio`),
+FOREIGN KEY (`nombre_anunciante`, `nombre_anuncio`) REFERENCES `anuncio`(`nombre_anunciante`, `nombre_anuncio`)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `tag_anuncio`(
+`nombre_tag` VARCHAR(100) NOT NULL,
+`nombre_anunciante` VARCHAR(100) NOT NULL,
+`nombre_anuncio` VARCHAR(100) NOT NULL,
+PRIMARY KEY(`nombre_tag`, `nombre_anunciante`, `nombre_anuncio`),
+FOREIGN KEY(`nombre_tag`) REFERENCES `tag`(`nombre_tag`) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY(`nombre_anunciante`, `nombre_anuncio`) REFERENCES `anuncio`(`nombre_anunciante`, `nombre_anuncio`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `historial_anuncio`(
+`codigo` INT NOT NULL AUTO_INCREMENT,
+`nombre_anunciante` VARCHAR(100) NOT NULL,
+`nombre_anuncio` VARCHAR(100) NOT NULL,
+`link_donde_aparecio` LONGTEXT NOT NULL,
+`fecha_de_aparicion` DATE NOT NULL,
+PRIMARY KEY (`codigo`),
 FOREIGN KEY (`nombre_anunciante`, `nombre_anuncio`) REFERENCES `anuncio`(`nombre_anunciante`, `nombre_anuncio`)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
