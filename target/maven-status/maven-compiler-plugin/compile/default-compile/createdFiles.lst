@@ -10,6 +10,7 @@ modelos\TagAnuncio.class
 modelosReportes\GananciaPorSuscripcion.class
 Servlets\ControladorSubirFoto.class
 Servlets\ControladorSubirRevista.class
+modelosReportes\DespligueDeAnunciante.class
 ConsultasALaDb\ConsultaUsuario.class
 modelos\Anunciante.class
 modelos\AnuncioTexto.class
@@ -32,6 +33,7 @@ Convetidores\ConvertidorAnunciante.class
 Servlets\ControladorAccionRevista$1.class
 ConsultasALaDb\ConsultaRevista.class
 herramientas\ConexionSql.class
+modelosReportes\RevistaComentada.class
 Convetidores\ConvertidorCostoPorDia.class
 Servlets\ConstroladorConsultaAdminstrativa$1.class
 modelos\Categoria.class
@@ -45,6 +47,7 @@ Servlets\ControladorRetornarTags.class
 Convetidores\ConvertidorHistorialAnuncio.class
 modelos\Anuncio.class
 Servlets\ControladorCrearUsuario.class
+modelosReportes\RevistaPopular.class
 modelos\Pago.class
 modelosReportes\GananciaPorSuscripcionAdminsrativa.class
 ConsultasALaDb\ConsultaLogin.class
@@ -60,6 +63,7 @@ modelos\ModeloResponseLogin.class
 ConsultasALaDb\ConsultaReporteAdministrativo.class
 Convetidores\ConvertidorAnuncioVideo.class
 modelos\TagRevista.class
+modelosReportes\DespliegueDeAnuncio.class
 Convetidores\Convertidor.class
 modelos\Tag.class
 Servlets\ConstroladorConsultaAdminstrativa.class

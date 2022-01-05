@@ -10,6 +10,8 @@ import herramientas.ConstructorDeObjeto;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -52,7 +54,21 @@ public class ControladorReporteAdministrativo extends HttpServlet {
                 case "gananciasAnuncios":
                     reporteDeGananciasPorAnuncios(request, response);
                     break;
-                    
+                case "gananciasTotales":
+                    reporteDeGananciasTotales(response);
+                    break;
+                case "masPopulares":
+                    reporte5RevistasMasPopulares(request, response);
+                    break;
+                case "masComentadas":
+                    reporte5RevistasMasComentadas(request, response);
+                    break;
+                case "reporteAnuncios":
+                    reporteDeAnuncios(request, response);
+                    break;
+                case "reporteEfectividadDeAnuncios":
+                    reporteEfectividadDeAnuncios(request, response);
+                    break;
             }
         } catch (NullPointerException e) {
 
@@ -60,51 +76,99 @@ public class ControladorReporteAdministrativo extends HttpServlet {
     }
 
     private void reporteDeGanancias(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            ServletOutputStream out = response.getOutputStream();//obtenemos el stream del servlet        
-            //consulta que contiene los metodos para armar el reporte
-            ConsultaReporteAdministrativo consulta = new ConsultaReporteAdministrativo(new ConstructorDeObjeto());
-            //obtenemos los parametros para pasarle al metodo
-            String primeraFecha = request.getParameter("primeraFecha");
-            String segundaFecha = request.getParameter("segundaFecha");
-            String nombreRevista = request.getParameter("nombreRevista");
-            String nombreUsuarioCreador = request.getParameter("usuarioCreador");
-            //mandamosa construir el reporte
-            Map<String, Object> mapaDatos = consulta.reporteDeGanancias(nombreRevista, nombreUsuarioCreador, primeraFecha, segundaFecha);
-            InputStream reporteStream = getClass().getResourceAsStream("/reportes/GananciasPorRevistas.jasper");//treamos el reporte de los resorces
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(reporteStream);//cargamos el reorte
-            response.setContentType("application/pdf");//indicamos que es un pdf la salida
-            response.addHeader("Content-disposition", "inline; filename=ReporteSuscripciones.pdf");
-            JasperPrint reportePintado = JasperFillManager.fillReport(reporte, mapaDatos, new JREmptyDataSource());//pintamos el reporte
-            JasperExportManager.exportReportToPdfStream(reportePintado, out);//exportamos el reporte
-            out.flush();
-            out.close();
-        } catch (JRException ex) {
-
-        }
+        //consulta que contiene los metodos para armar el reporte
+        ConsultaReporteAdministrativo consulta = new ConsultaReporteAdministrativo(new ConstructorDeObjeto());
+        //obtenemos los parametros para pasarle al metodo
+        String primeraFecha = request.getParameter("primeraFecha");
+        String segundaFecha = request.getParameter("segundaFecha");
+        String nombreRevista = request.getParameter("nombreRevista");
+        String nombreUsuarioCreador = request.getParameter("usuarioCreador");
+        //mandamosa construir el reporte
+        Map<String, Object> mapaDatos = consulta.reporteDeGanancias(nombreRevista, nombreUsuarioCreador, primeraFecha, segundaFecha);
+        InputStream reporteStream = getClass().getResourceAsStream("/reportes/GananciasPorRevistas.jasper");//treamos el reporte de los resorces
+        cargarReportes(response, mapaDatos, reporteStream, "Ganancias por revistas");
     }
-    
+
     private void reporteDeGananciasPorAnuncios(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            ServletOutputStream out = response.getOutputStream();//obtenemos el stream del servlet        
-            //consulta que contiene los metodos para armar el reporte
-            ConsultaReporteAdministrativo consulta = new ConsultaReporteAdministrativo(new ConstructorDeObjeto());
-            //obtenemos los parametros para pasarle al metodo
-            String primeraFecha = request.getParameter("primeraFecha");
-            String segundaFecha = request.getParameter("segundaFecha");
-            String nombreAnunciante = request.getParameter("nombreAnunciante");
-            //mandamosa construir el reporte
-            Map<String, Object> mapaDatos = consulta.reporteGananciasPorAnunciante(nombreAnunciante, primeraFecha, segundaFecha);
-            InputStream reporteStream = getClass().getResourceAsStream("/reportes/GananciaDeAnuncios.jasper");//treamos el reporte de los resorces
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(reporteStream);//cargamos el reorte
+        //consulta que contiene los metodos para armar el reporte
+        ConsultaReporteAdministrativo consulta = new ConsultaReporteAdministrativo(new ConstructorDeObjeto());
+        //obtenemos los parametros para pasarle al metodo
+        String primeraFecha = request.getParameter("primeraFecha");
+        String segundaFecha = request.getParameter("segundaFecha");
+        String nombreAnunciante = request.getParameter("nombreAnunciante");
+        //mandamosa construir el reporte
+        Map<String, Object> mapaDatos = consulta.reporteGananciasPorAnunciante(nombreAnunciante, primeraFecha, segundaFecha);
+        InputStream reporteStream = getClass().getResourceAsStream("/reportes/GananciaDeAnuncios.jasper");//treamos el reporte de los resorces
+        cargarReportes(response, mapaDatos, reporteStream, "Ganancias por anuncios");
+    }
+
+    private void reporteDeGananciasTotales(HttpServletResponse response) throws IOException {
+        //consulta que contiene los metodos para armar el reporte
+        ConsultaReporteAdministrativo consulta = new ConsultaReporteAdministrativo(new ConstructorDeObjeto());
+        //mandamosa construir el reporte
+        Map<String, Object> mapaDatos = consulta.reporteDeGananciasTotales();
+        InputStream reporteStream = getClass().getResourceAsStream("/reportes/GananciasTotales.jasper");//treamos el reporte de los resorces
+        cargarReportes(response, mapaDatos, reporteStream, "Ganancias totales");
+    }
+
+    private void reporte5RevistasMasPopulares(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //consulta que contiene los metodos para armar el reporte
+        ConsultaReporteAdministrativo consulta = new ConsultaReporteAdministrativo(new ConstructorDeObjeto());
+        //obtenemos los parametros para pasarle al metodo
+        String primeraFecha = request.getParameter("primeraFecha");
+        String segundaFecha = request.getParameter("segundaFecha");
+        //mandamosa construir el reporte
+        Map<String, Object> mapaDatos = consulta.reporteRevistasMasPopulares(primeraFecha, segundaFecha);
+        InputStream reporteStream = getClass().getResourceAsStream("/reportes/CincoRevistasMasPopulares.jasper");//treamos el reporte de los resorces
+        cargarReportes(response, mapaDatos, reporteStream, "Cinco revistas mas populares");
+    }
+
+    private void reporte5RevistasMasComentadas(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //consulta que contiene los metodos para armar el reporte
+        ConsultaReporteAdministrativo consulta = new ConsultaReporteAdministrativo(new ConstructorDeObjeto());
+        //obtenemos los parametros para pasarle al metodo
+        String primeraFecha = request.getParameter("primeraFecha");
+        String segundaFecha = request.getParameter("segundaFecha");
+        //mandamosa construir el reporte
+        Map<String, Object> mapaDatos = consulta.reporteRevistasMasComentadas(primeraFecha, segundaFecha);
+        InputStream reporteStream = getClass().getResourceAsStream("/reportes/CincoMasComentadas.jasper");//treamos el reporte de los resorces
+        cargarReportes(response, mapaDatos, reporteStream, "Cinco revistas mas comentadas");
+    }
+
+    private void reporteDeAnuncios(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //consulta que contiene los metodos para armar el reporte
+        ConsultaReporteAdministrativo consulta = new ConsultaReporteAdministrativo(new ConstructorDeObjeto());
+        //obtenemos los parametros para pasarle al metodo
+        String primeraFecha = request.getParameter("primeraFecha");
+        String segundaFecha = request.getParameter("segundaFecha");
+        //mandamosa construir el reporte
+        Map<String, Object> mapaDatos = consulta.reporteDeAnuncios(primeraFecha, segundaFecha);
+        InputStream reporteStream = getClass().getResourceAsStream("/reportes/ReporteAnuncios.jasper");//treamos el reporte de los resorces
+        cargarReportes(response, mapaDatos, reporteStream, "Reporde de anuncios");
+    }
+
+    private void reporteEfectividadDeAnuncios(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //consulta que contiene los metodos para armar el reporte
+        ConsultaReporteAdministrativo consulta = new ConsultaReporteAdministrativo(new ConstructorDeObjeto());
+        //obtenemos los parametros para pasarle al metodo
+        String primeraFecha = request.getParameter("primeraFecha");
+        String segundaFecha = request.getParameter("segundaFecha");
+        //mandamosa construir el reporte
+        Map<String, Object> mapaDatos = consulta.efectividadDeAnuncios(primeraFecha, segundaFecha);
+        InputStream reporteStream = getClass().getResourceAsStream("/reportes/EfectividadDeAnuncios.jasper");//treamos el reporte de los resorces
+        cargarReportes(response, mapaDatos, reporteStream, "Reporde de efectividad de anuncios");
+    }
+
+    private void cargarReportes(HttpServletResponse response, Map<String, Object> mapaDatos, InputStream reporteStream, String nombreArchivo) throws IOException {
+        try ( ServletOutputStream out = response.getOutputStream()) {//obtenemos el stream del servlet
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(reporteStream);//cargamos el reporte
             response.setContentType("application/pdf");//indicamos que es un pdf la salida
-            response.addHeader("Content-disposition", "inline; filename=ReporteSuscripciones.pdf");
+            response.addHeader("Content-disposition", "inline; filename=" + nombreArchivo + ".pdf");
             JasperPrint reportePintado = JasperFillManager.fillReport(reporte, mapaDatos, new JREmptyDataSource());//pintamos el reporte
             JasperExportManager.exportReportToPdfStream(reportePintado, out);//exportamos el reporte
             out.flush();
             out.close();
         } catch (JRException ex) {
-
         }
     }
 }

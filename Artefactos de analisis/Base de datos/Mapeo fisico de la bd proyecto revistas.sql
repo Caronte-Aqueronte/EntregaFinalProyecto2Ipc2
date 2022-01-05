@@ -48,17 +48,6 @@ ON DELETE CASCADE
 ON UPDATE CASCADE
 );
 
-CREATE TABLE `edicion` (
-`numero_de_edicion` INT NOT NULL,
-`nombre_de_revista` VARCHAR(100) NOT NULL,
-`nombre_de_usuario_creador` VARCHAR(100) NOT NULL,
-`contenido` LONGBLOB NOT NULL,
-PRIMARY KEY (`numero_de_edicion`, `nombre_de_revista`, `nombre_de_usuario_creador`),
-FOREIGN KEY (`nombre_de_revista` , `nombre_de_usuario_creador`)
-REFERENCES `revista` (`nombre_de_revista` , `nombre_de_usuario_creador`)
-ON DELETE CASCADE
-ON UPDATE CASCADE);
-
 CREATE TABLE `perfil` (
 `nombre_de_usuario` VARCHAR(100) NOT NULL,
 `foto` LONGBLOB NOT NULL,

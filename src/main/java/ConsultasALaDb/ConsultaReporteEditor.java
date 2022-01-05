@@ -183,7 +183,6 @@ public class ConsultaReporteEditor extends Consulta {
         double total = 0;
         //exploramos el array y por cada iteracion sumamos el total con el total individual por suscripcion
         for (GananciaPorSuscripcion item : ganancias) {
-            System.out.println(String.valueOf(item.getTotalDeGanancia()));
             total += item.getTotalDeGanancia();
         }
         return total;

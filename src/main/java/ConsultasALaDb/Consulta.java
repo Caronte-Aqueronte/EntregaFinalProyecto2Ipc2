@@ -45,7 +45,6 @@ public abstract class Consulta extends ConexionSql {
                 return true;//retornar ture
             }
             //si el while no itero entonces retornamos false
-            System.out.println("No entro while");
             return false;
         } catch (SQLException ex) {
             return false;

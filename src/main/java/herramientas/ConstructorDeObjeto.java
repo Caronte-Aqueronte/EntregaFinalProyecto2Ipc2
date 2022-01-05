@@ -157,7 +157,7 @@ public class ConstructorDeObjeto {
                 }
             }
             return intereacciones;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return intereacciones;
         }
     }
@@ -365,6 +365,96 @@ public class ConstructorDeObjeto {
             return ganancias;
         } catch (SQLException e) {
             return ganancias;
+        }
+    }
+
+    public ArrayList<RevistaPopular> construirRevistasPopulares(ResultSet resultado) {
+        ArrayList<RevistaPopular> revistasPopulares = new ArrayList<>();
+        try {
+            while (resultado.next()) {//explorar el resultSrt para obtneer las columnas del mismo
+                //obtener las celdas de las tuplas y alojarlos en variables
+                String nombreRevista = resultado.getString("nombre_de_revista");//
+                String usuarioCreador = resultado.getString("nombre_de_usuario_creador");//
+                int numeroDeSuscripciones = resultado.getInt("numero_de_suscripciones");//
+                //construir un objeto de revista popular y agregarlo al array
+                RevistaPopular revistaPopular = new RevistaPopular(numeroDeSuscripciones, nombreRevista, usuarioCreador);
+                revistasPopulares.add(revistaPopular);
+            }
+            return revistasPopulares;
+        } catch (SQLException e) {
+            return revistasPopulares;
+        }
+    }
+
+    public ArrayList<RevistaComentada> construirRevistasComentadas(ResultSet resultado) {
+        ArrayList<RevistaComentada> revistasComentadas = new ArrayList<>();
+        try {
+            while (resultado.next()) {//explorar el resultSrt para obtneer las columnas del mismo
+                //obtener las celdas de las tuplas y alojarlos en variables
+                String nombreRevista = resultado.getString("nombre_de_revista");//
+                String usuarioCreador = resultado.getString("revista_nombre_de_usuario_creador");//
+                int numeroDeSuscripciones = resultado.getInt("numero_de_comentarios");//
+                //construir un objeto de revista popular y agregarlo al array
+                RevistaComentada revistaPopular = new RevistaComentada(numeroDeSuscripciones, nombreRevista, usuarioCreador);
+                revistasComentadas.add(revistaPopular);
+            }
+            return revistasComentadas;
+        } catch (SQLException e) {
+            return revistasComentadas;
+        }
+    }
+
+    public ArrayList<HistorialAnuncio> construirHistorialDeAnuncios(ResultSet resultado) {
+        ArrayList<HistorialAnuncio> historialDeAnuncios = new ArrayList<>();
+        try {
+            //explorar el resulado, conseguir ls parametros de un Anuncio y construir uno a partir de ello
+            while (resultado.next()) {
+                String nombreAnunciante = resultado.getString("nombre_anunciante");
+                String nombreAnuncio = resultado.getString("nombre_anuncio");
+                String url = resultado.getString("link_donde_aparecio");
+                String fechaDeDespliegue = resultado.getString("fecha_de_aparicion");
+                //crear el anuncio y agregarlos al array
+                HistorialAnuncio historial = new HistorialAnuncio(url, fechaDeDespliegue, nombreAnuncio, nombreAnunciante);
+                historialDeAnuncios.add(historial);
+            }
+            return historialDeAnuncios;
+        } catch (SQLException e) {
+            return historialDeAnuncios;
+        }
+    }
+
+    public ArrayList<DespliegueDeAnuncio> construirDesplieguesDeAnuncio(ResultSet resultado) {
+        ArrayList<DespliegueDeAnuncio> despliegues = new ArrayList<>();
+        try {
+            //explorar el resulado, conseguir ls parametros de un Anuncio y construir uno a partir de ello
+            while (resultado.next()) {
+                String nombreAnunciante = resultado.getString("nombre_anunciante");
+                String nombreAnuncio = resultado.getString("nombre_anuncio");
+                int vecesQueSeDesplego = resultado.getInt("veces_que_se_desplego");
+                //crear el despliegue y agregarlos al array
+                DespliegueDeAnuncio desplieguesDeAnuncio = new DespliegueDeAnuncio(vecesQueSeDesplego, nombreAnuncio, nombreAnunciante);
+                despliegues.add(desplieguesDeAnuncio);
+            }
+            return despliegues;
+        } catch (SQLException e) {
+            return despliegues;
+        }
+    }
+    
+    public ArrayList<DespligueDeAnunciante> construirDesplieguesDeAnunciante(ResultSet resultado) {
+        ArrayList<DespligueDeAnunciante> despliegues = new ArrayList<>();
+        try {
+            //explorar el resulado, conseguir ls parametros de un Anuncio y construir uno a partir de ello
+            while (resultado.next()) {
+                String nombreAnunciante = resultado.getString("nombre_anunciante");
+                int vecesQueSeDesplego = resultado.getInt("despligues_de_anunciante");
+                //crear el despliegue y agregarlos al array
+                DespligueDeAnunciante desplieguesDeAnunciante = new DespligueDeAnunciante(vecesQueSeDesplego, nombreAnunciante);
+                despliegues.add(desplieguesDeAnunciante);
+            }
+            return despliegues;
+        } catch (SQLException e) {
+            return despliegues;
         }
     }
 }
