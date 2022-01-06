@@ -12,17 +12,21 @@ import java.time.LocalDateTime;
  *
  * @author Luis Monterroso
  */
-public class Comentario extends Revista{
-    
+public class Comentario extends Revista {
+
     private String contenidoComentario;
     private LocalDate fechaDeComentario;
+    private String nombreUsuarioComentador;
 
-    public Comentario(String contenidoComentario, LocalDate fechaDeComentario, String nombreRevista, String usuarioCreador) {
+    public Comentario(String contenidoComentario, LocalDate fechaDeComentario, String nombreUsuarioComentador, String nombreRevista, String usuarioCreador) {
         super(nombreRevista, usuarioCreador);
         this.contenidoComentario = contenidoComentario;
         this.fechaDeComentario = fechaDeComentario;
+        this.nombreUsuarioComentador = nombreUsuarioComentador;
     }
+
     
+
     public String getContenidoComentario() {
         return contenidoComentario;
     }
@@ -39,6 +43,12 @@ public class Comentario extends Revista{
         this.fechaDeComentario = fechaDeComentario;
     }
 
+    public String getNombreUsuarioComentador() {
+        return nombreUsuarioComentador;
+    }
 
-    
+    public void setNombreUsuarioComentador(String nombreUsuarioComentador) {
+        this.nombreUsuarioComentador = nombreUsuarioComentador;
+    }
+
 }

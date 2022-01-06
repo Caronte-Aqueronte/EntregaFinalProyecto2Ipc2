@@ -62,11 +62,16 @@ ON UPDATE CASCADE);
 CREATE TABLE `comentario` (
 `nombre_de_revista` VARCHAR(100) NOT NULL,
 `revista_nombre_de_usuario_creador` VARCHAR(100) NOT NULL,
+`nombre_usuario_comentador` VARCHAR(100) NOT NULL,
 `fecha_de_comentario` DATETIME NOT NULL,
 `contenido_de_comentario` LONGTEXT NOT NULL,
-PRIMARY KEY (`nombre_de_revista`, `revista_nombre_de_usuario_creador`, `fecha_de_comentario`),
+PRIMARY KEY (`nombre_de_revista`, `revista_nombre_de_usuario_creador`, `fecha_de_comentario`, `nombre_usuario_comentador`),
 FOREIGN KEY (`nombre_de_revista` , `revista_nombre_de_usuario_creador`)
 REFERENCES `revista` (`nombre_de_revista` , `nombre_de_usuario_creador`)
+ON DELETE CASCADE
+ON UPDATE CASCADE,
+FOREIGN KEY (`nombre_usuario_comentador`)
+REFERENCES `usuario`(`nombre_de_usuario`)
 ON DELETE CASCADE
 ON UPDATE CASCADE);
 

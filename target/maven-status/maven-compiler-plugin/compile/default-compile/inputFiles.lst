@@ -10,6 +10,7 @@ F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\HistorialAnuncio.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorLogin.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\ConsultasALaDb\ConsultaRevista.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorSubirFoto.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorTag.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelosReportes\RevistaPopular.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\CostoPorDia.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\Pago.java
@@ -65,6 +66,7 @@ F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\AnuncioVideo.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Servlets\ControladorReporteAdministrativo.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorAnuncioTexto.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\herramientas\ConstructorDeObjeto.java
+F:\NetBeansProjects\revistas-app-api\src\main\java\Convetidores\ConvertidorCategoria.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\TagAnuncio.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelos\Usuario.java
 F:\NetBeansProjects\revistas-app-api\src\main\java\modelosReportes\GananciaPorSuscripcionAdminsrativa.java

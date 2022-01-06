@@ -36,7 +36,9 @@ herramientas\ConexionSql.class
 modelosReportes\RevistaComentada.class
 Convetidores\ConvertidorCostoPorDia.class
 Servlets\ConstroladorConsultaAdminstrativa$1.class
+Convetidores\ConvertidorCategoria.class
 modelos\Categoria.class
+Convetidores\ConvertidorTag.class
 herramientas\ExtractorDeString.class
 Convetidores\ConvertidorBooleano.class
 modelos\Usuario.class

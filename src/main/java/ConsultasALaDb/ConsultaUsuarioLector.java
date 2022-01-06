@@ -267,10 +267,11 @@ public class ConsultaUsuarioLector extends ConsultaUsuario {
         if (saberEstadoDeInteraccionesConRevista(comentario.getNombreRevista(), comentario.getUsuarioCreador()).isEstadoComentarios()) {
             try {
                 PreparedStatement query = CONEXION.prepareStatement(
-                        "INSERT INTO comentario VALUES(?,?,NOW(),?)");//inserta una nueva tupla en la tabla comentario
+                        "INSERT INTO comentario VALUES(?,?,?,NOW(),?)");//inserta una nueva tupla en la tabla comentario
                 query.setString(1, comentario.getNombreRevista());//damos valores a los ?
                 query.setString(2, comentario.getUsuarioCreador());//
-                query.setString(3, comentario.getContenidoComentario());//
+                query.setString(3, comentario.getNombreUsuarioComentador());//
+                query.setString(4, comentario.getContenidoComentario());//
                 if (query.executeUpdate() > 0) {//si al insertar se modifica mas de una tabla entonces podemos hacer el commit
                     CONEXION.commit();
                     return "Se inserto tu comentario con exito.";

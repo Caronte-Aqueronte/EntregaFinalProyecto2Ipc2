@@ -367,4 +367,32 @@ public class ConsultaUsuarioAdministrador extends ConsultaUsuario {
             return null;
         }
     }
+    public String guardarCategoria(Categoria categoria) {
+        try {
+            PreparedStatement query = CONEXION.prepareStatement(
+                    "INSERT INTO categoria VALUES(?)");//inserta una nueva fila
+            query.setString(1, categoria.getNombreCategoria());//damos valors a lo s? con los parametros
+            if(query.executeUpdate() > 0){
+                CONEXION.commit();
+                return "Se guardo la categoria con exito.";
+            }
+            return "No se inserto la categoria";
+        } catch (SQLException ex) {
+            return "No se inserto la categoria por un error en el servidor";
+        }
+    }
+      public String guardarTag(Tag tag) {
+        try {
+            PreparedStatement query = CONEXION.prepareStatement(
+                    "INSERT INTO tag VALUES(?)");//inserta una nueva fila
+            query.setString(1, tag.getNombreTag());//damos valors a lo s? con los parametros
+            if(query.executeUpdate() > 0){
+                CONEXION.commit();
+                return "Se guardo el tag con exito.";
+            }
+            return "No se inserto el tag";
+        } catch (SQLException ex) {
+            return "No se inserto el tag por un error en el servidor";
+        }
+    }
 }

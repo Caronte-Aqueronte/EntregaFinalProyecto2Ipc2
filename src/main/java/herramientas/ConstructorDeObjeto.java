@@ -171,8 +171,9 @@ public class ConstructorDeObjeto {
                 String usuarioCreador = resultado.getString("revista_nombre_de_usuario_creador");
                 LocalDate fechaCreacion = resultado.getDate("fecha_de_comentario").toLocalDate();
                 String contenidoComentario = resultado.getString("contenido_de_comentario");
+                String nombreUsuarioComentador = resultado.getString("nombre_usuario_comentador");
                 //a patir de los valores crear un nuevo comentario
-                Comentario comentario = new Comentario(contenidoComentario, fechaCreacion, nombreRevista, usuarioCreador);
+                Comentario comentario = new Comentario(contenidoComentario, fechaCreacion, nombreUsuarioComentador, nombreRevista, usuarioCreador);
                 //anadir el nuevo comentario al array
                 comentarios.add(comentario);
             }

@@ -27,9 +27,11 @@ import modelos.Anuncio;
 import modelos.AnuncioImagen;
 import modelos.AnuncioTexto;
 import modelos.AnuncioVideo;
+import modelos.Categoria;
 import modelos.CostoPorDia;
 import modelos.HistorialAnuncio;
 import modelos.Revista;
+import modelos.Tag;
 import modelos.TagAnuncio;
 
 /**
@@ -107,6 +109,14 @@ public class ConstroladorConsultaAdminstrativa extends HttpServlet {
             case "guardarHistorial":
                 jsonRequest = extractor.extraerStringDeRequest();
                 guardarHistorial(jsonRequest, response);
+                break;
+            case "guardarCategoria":
+                jsonRequest = extractor.extraerStringDeRequest();
+                guardarCategoria(jsonRequest, response);
+                break;
+            case "guardarTag":
+                jsonRequest = extractor.extraerStringDeRequest();
+                guardarTag(jsonRequest, response);
                 break;
         }
     }
@@ -263,5 +273,25 @@ public class ConstroladorConsultaAdminstrativa extends HttpServlet {
         Convertidor convertidor = new ConvertidorHistorialAnuncio(HistorialAnuncio.class);//para extraer el historial del request
         HistorialAnuncio historial = (HistorialAnuncio) convertidor.deJsonAClase(jsonRequest);//extraer json del request con convertidor
         consultaUsuarioAdministrador.guardarHistorialDeAnuncio(historial);//mandamos a guardar el historial
+    }
+
+    public void guardarCategoria(String jsonRequest, HttpServletResponse response) throws IOException, ServletException {
+        ConsultaUsuarioAdministrador consultaUsuarioAdministrador = new ConsultaUsuarioAdministrador(new ConstructorDeObjeto());
+        Convertidor convertidorCategoria = new ConvertidorCategoria(Categoria.class);
+        Convertidor convertidorString = new ConvertidorString(String.class);
+        Categoria categoria = (Categoria) convertidorCategoria.deJsonAClase(jsonRequest);
+        String confirmacion = consultaUsuarioAdministrador.guardarCategoria(categoria);
+        String jsonResponse = convertidorString.deObjetoAJson(confirmacion);
+        response.getWriter().append(jsonResponse);
+    }
+
+    public void guardarTag(String jsonRequest, HttpServletResponse response) throws IOException, ServletException {
+        ConsultaUsuarioAdministrador consultaUsuarioAdministrador = new ConsultaUsuarioAdministrador(new ConstructorDeObjeto());
+        Convertidor convertidorTag = new ConvertidorTag(Tag.class);
+        Convertidor convertidorString = new ConvertidorString(String.class);
+        Tag tag = (Tag) convertidorTag.deJsonAClase(jsonRequest);
+        String confirmacion = consultaUsuarioAdministrador.guardarTag(tag);
+        String jsonResponse = convertidorString.deObjetoAJson(confirmacion);
+        response.getWriter().append(jsonResponse);
     }
 }

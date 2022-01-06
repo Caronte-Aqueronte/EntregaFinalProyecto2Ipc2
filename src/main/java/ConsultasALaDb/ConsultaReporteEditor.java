@@ -41,7 +41,7 @@ public class ConsultaReporteEditor extends Consulta {
 
             ResultSet resultado = query.executeQuery();//ejecutar la query
             ArrayList<Comentario> comentarios = getConstructorObjeto().construirArrayDeComentarios(resultado);//construir el array apartir del resultado
-            comentarios.add(0, new Comentario("", null, "", ""));//agrefar un comentario extra pues no se muestra el primero
+            comentarios.add(0, new Comentario("", null, "", "", ""));//agrefar un comentario extra pues no se muestra el primero
             JRBeanArrayDataSource datos = new JRBeanArrayDataSource(comentarios.toArray());//enviamos el array list como array al Jr
             return datos;
         } catch (SQLException ex) {
